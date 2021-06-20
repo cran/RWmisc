@@ -23,7 +23,7 @@ polys_t <- st_sfc(list(st_polygon(list(rbind(c(2,2), c(2,6), c(6,6),
                                              c(8,4), c(8,8)))),
                        st_polygon(list(rbind(c(3,3), c(3,7), c(7,7),
                                              c(7,3), c(3,3))))),
-                  crs = 4326)
+                  crs = st_crs('OGC:CRS84'))
 
 ## create raster
 raster_t <- raster(nrows = 6, ncols = 6, xmn = 2, xmx = 8, ymn = 2, ymx = 8,
@@ -49,7 +49,7 @@ plot(polys_t, add = TRUE)
 nc <- st_read(system.file("shape/nc.shp", package="sf"))
 
 ## transform crs to WGS84 and inspect CRS
-nc <- st_transform(nc, st_crs(4326))
+nc <- st_transform(nc, st_crs('OGC:CRS84'))
 st_crs(nc)
 
 ## project to UTM and inspect CRS
@@ -77,14 +77,14 @@ nc_points <- st_geometry(nc[53,]) %>%
 farthest_ind <- st_distance(nc_points, nc_centroids[53,]) %>%
   which.max()
 
-farthest_point <- rbind(st_coordinates(nc_points[farthest_ind,]),
+farthest_point <- rbind(st_coordinates(nc_points[farthest_ind]),
                         st_coordinates(nc_centroids[53,])) %>% 
   st_linestring()
 
 nearest_ind <- st_distance(nc_points, nc_centroids[53,]) %>%
   which.min()
 
-nearest_point <- rbind(st_coordinates(nc_points[nearest_ind,]),
+nearest_point <- rbind(st_coordinates(nc_points[nearest_ind]),
                         st_coordinates(nc_centroids[53,])) %>% 
   st_linestring()
 
