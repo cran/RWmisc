@@ -1,3 +1,7 @@
+# RWmisc 0.1.2
+
+- Update tests for compatibility with units 0.8-0
+
 # RWmisc 0.1.1
 
 - Update vignette for compatibility with sf 1.0.0
